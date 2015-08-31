@@ -1,37 +1,23 @@
-import React from 'react';
-import classnames from 'classnames';
+import React from "react";
 
-import BreadCrumbs from '../breadcrumbs/BreadCrumbs.jsx';
-import LoginButton from '../authentication/LoginButton.jsx';
-import Cards from '../cards/Cards.jsx';
-import Viewer from '../viewer/Viewer.jsx';
+import BreadCrumbs from "../breadcrumbs/BreadCrumbs.jsx";
+import LoginButton from "../authentication/LoginButton.jsx";
+import Cards from "../cards/Cards.jsx";
+import Viewer from "../viewer/Viewer.jsx";
 
 class Main extends React.Component{
 
   constructor(props){
     super(props);
-    this.name = 'app';
-  }
-
-  classes(){
-    let { levels, modes } = this.props.appState;
-    let levelClass = `${this.name}-is-${levels.current}`;
-    let modeClass = `${this.name}-is-${modes.current}`;
-
-    return classnames({
-      [this.name]: true,
-      [levelClass]: levels.current,
-      [modeClass]: modes.current
-    });
   }
 
   render() {
     let { appState, viewModel } = this.props;
-    let { levels, modes, user } = appState;
-    let { model, collection, data } = viewModel;
+    let { levels, user } = appState;
+    let { collection, data } = viewModel;
 
     return (
-      <section className="layout-main">
+      <div>
         <section className="layout-topbar">
           <BreadCrumbs levels={ levels }></BreadCrumbs>
           <LoginButton userId={ user }/>
@@ -40,14 +26,14 @@ class Main extends React.Component{
           { collection && <Cards collection={ collection } className="cards" /> }
           { data && <Viewer data={ data } /> }
         </section>
-      </section>
-    )
+      </div>
+    );
   }
-};
+}
 
 Main.propTypes = {
   appState: React.PropTypes.object.isRequired,
   viewModel: React.PropTypes.object
-}
+};
 
 export default Main;

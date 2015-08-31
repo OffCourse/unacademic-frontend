@@ -1,19 +1,19 @@
-import React from 'react';
-import classnames from 'classnames';
+import React from "react";
+import classnames from "classnames";
 
-import WaypointMap from '../maps/WaypointMap.jsx';
-import Editable from '../editable/Editable.jsx';
-import TodoList from '../todoList/TodoList.jsx';
+import WaypointMap from "../maps/WaypointMap.jsx";
+import Editable from "../editable/Editable.jsx";
+import TodoList from "../todoList/TodoList.jsx";
 
-import DescriptionSection from './sections/DescriptionSection.jsx';
+import DescriptionSection from "./sections/DescriptionSection.jsx";
 
-import Actions from '../../actions/index';
+import Actions from "../../actions/index";
 
 class WaypointPanel extends React.Component {
 
   constructor(props){
     super(props);
-    this.name = 'panel';
+    this.name = "panel";
   }
 
   handleComplete(item){
@@ -25,6 +25,14 @@ class WaypointPanel extends React.Component {
     let { context } = this.props;
     let selection = this._getSelection(item);
     Actions.setHighlight(selection, status, context);
+  }
+
+  selectCheckpoint(selection){
+    let { id, title } = this.props.model;
+    selection.waypoint = { id, title };
+    selection.type = "checkpoint";
+    Actions.setLevel(selection);
+    this.handleHover(selection.id, false);
   }
 
   _getSelection(item){
@@ -42,9 +50,9 @@ class WaypointPanel extends React.Component {
   }
 
   render() {
-    let { mode, model, level, context } = this.props;
-    let { id, title, image, curator, description, summary, checkpoints } = model;
-    let isEditing = mode === 'curate';
+    let { mode, model, context } = this.props;
+    let { title, curator, description, summary, checkpoints } = model;
+    let isEditing = mode === "curate";
 
     return (
       <section className={ this.classes() }>
@@ -68,24 +76,25 @@ class WaypointPanel extends React.Component {
 
           <section className="panel_section">
             <h1>Summary</h1>
-            <Editable fieldName={ 'summary' } value={ summary } editing={ isEditing }/>
+            <Editable fieldName={ "summary" } value={ summary } editing={ isEditing }/>
           </section>
 
-          { context === 'sidebar' && <DescriptionSection description={ description }/> }
-          { context === 'card' && <TodoList title={ 'Checkpoints' }
+          { context === "sidebar" && <DescriptionSection description={ description }/> }
+          { context === "card" && <TodoList title={ "Checkpoints" }
               handleHover={ this.handleHover.bind(this) }
               handleComplete={ this.handleComplete.bind(this) }
+              selectElement={ this.selectCheckpoint.bind(this) }
               collection={ checkpoints }/> }
         </section>
       </section>
-    )
-  }
-};
+    );
+  };
+}
 
 WaypointPanel.propTypes = {
   model: React.PropTypes.object,
   mode: React.PropTypes.string,
   level: React.PropTypes.string
-}
+};
 
 export default WaypointPanel;

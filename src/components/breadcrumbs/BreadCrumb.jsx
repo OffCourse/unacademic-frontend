@@ -1,12 +1,12 @@
-import React from 'react';
-import Actions from '../../actions/index';
-import classnames from 'classnames';
+import React from "react";
+import Actions from "../../actions/index";
+import classnames from "classnames";
 
 class BreadCrumb extends React.Component {
 
   constructor(props){
     super(props);
-    this.name = 'breadcrumb';
+    this.name = "breadcrumb";
   }
 
   handleClick(selection){
@@ -26,20 +26,20 @@ class BreadCrumb extends React.Component {
   }
 
   render() {
-    let { level, current } = this.props;
+    let { level } = this.props;
     let [ type, {id, title} ] = level;
     let selection = { type, id, title };
     return (
       <li onClick={ this.handleClick.bind(this, selection) } className={ this.classes() }>
-        { title || 'Home' }
+        { title || "Home" }
       </li>
-    )
-  }
+    );
+  };
 }
 
 BreadCrumb.propTypes = {
   level: React.PropTypes.array,
   currentMode: React.PropTypes.string
-}
+};
 
 export default BreadCrumb;

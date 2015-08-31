@@ -1,3 +1,4 @@
+/*eslint no-unused-vars:0 */
 let _callbacks = [];
 let _promises = [];
 
@@ -22,7 +23,7 @@ class Dispatcher {
       Promise.resolve(callback(payload)).then(() => {
         resolves[i](payload);
       }, () => {
-        rejects[i](new Error('Dispatcher callback unsuccessful'));
+        rejects[i](new Error("Dispatcher callback unsuccessful"));
       });
     });
     _promises = [];

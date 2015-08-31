@@ -1,17 +1,16 @@
-import React from 'react';
-import classnames from 'classnames';
-import Actions from '../../actions/index';
+import React from "react";
+import classnames from "classnames";
+import Actions from "../../actions/index";
 
 class LoginButton extends React.Component{
 
   constructor(props){
     super(props);
-    this.name = 'login';
+    this.name = "login";
   }
 
   handleClick(){
-    alert('coming soon...');
-    // Actions.authenticate();
+    Actions.setLevel({ type: "feedback" });
   }
 
   classes(){
@@ -25,17 +24,16 @@ class LoginButton extends React.Component{
   }
 
   render() {
-    let { userId } = this.props;
     return (
       <li onClick={ this.handleClick.bind(this) } className={ this.classes() }>
-        { userId || 'Feedback' }
+        Feedback
       </li>
-    )
-  }
-};
-
-LoginButton.propTypes  = {
-  userId: React.PropTypes.string
+    );
+  };
 }
+
+LoginButton.propTypes = {
+  userId: React.PropTypes.string
+};
 
 export default LoginButton;

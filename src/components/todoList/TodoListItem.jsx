@@ -1,42 +1,47 @@
-import React from 'react';
-import R from 'ramda';
+import React from "react";
 
 class TodoListItem extends React.Component {
 
   render() {
-    let { item, checkDone, handleHover } = this.props;
+    let { item, handleComplete, handleHover, selectElement } = this.props;
 
-    let title;
-
+    let title = item.title;
     let id = item.id;
+
+    let selection = {id, title};
+
     if(item.title.length > 28){
-      title = item.title.substring(0, 28) + ' ...';
+      title = item.title.substring(0, 28) + " ...";
     } else {
       title = item.title;
     }
 
-    let isComplete = item.complete ? 'complete' : 'incomplete';
-    let classes = ['todolist_item']
+    let isComplete = item.complete ? "complete" : "incomplete";
+    let classes = ["todolist_item"];
 
     if(item.highlight){
-      classes.push('todolist_item-is-highlighted')
+      classes.push("todolist_item-is-highlighted");
     }
 
     return (
       <li onMouseOut={ handleHover.bind(this, id, false) }
         onMouseOver={ handleHover.bind(this, id, true) }
-        onClick={ checkDone.bind(this, id) }
-        className={ classes.join(' ') }>
-          <p><span className={ `checkbox checkbox-is-${isComplete}` }></span>{ title }</p>
+        className={ classes.join(" ") }>
+          <p>
+            <span className={ `checkbox checkbox-is-${isComplete}` }
+              onClick={ handleComplete.bind(this, id) }></span>
+            <span className="title-resource"
+              onClick={ selectElement.bind(this, selection) }>{ title }</span>
+          </p>
       </li>
-    )
+    );
   }
-};
+}
 
 TodoListItem.propTypes = {
   item: React.PropTypes.object.isRequired,
-  checkDone: React.PropTypes.func.isRequired,
+  handleComplete: React.PropTypes.func.isRequired,
   handleHover: React.PropTypes.func.isRequired
-}
+};
 
 export default TodoListItem;

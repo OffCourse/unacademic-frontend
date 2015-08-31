@@ -1,8 +1,8 @@
-import React from 'react';
-import AppStore from '../../stores/index'
+import React from "react";
+import AppStore from "../../stores/index";
 
-import Unacademic from './Unacademic.jsx';
-import TourSelector from '../tour/TourSelector.jsx';
+import Unacademic from "./Unacademic.jsx";
+import TourSelector from "../tour/TourSelector.jsx";
 
 class UnacademicContainer extends React.Component{
 
@@ -30,16 +30,23 @@ class UnacademicContainer extends React.Component{
     if(appState && viewModel){
       return (
         <div>
-          <div className="placeholder">HELLO</div>
+          <div className="placeholder">
+          <p className="textbar textbar-inverse">Lots of Learning</p><br/>
+          <p className="textbar">Does not Fit Your Screen</p><br/>
+          <p className="textbar">Yet!</p><br/>
+          <p className="textbar textbar-inverse">Come Back Soon</p><br/>
+          <p className="textbar">Offcourse_</p>
+          </div>
           <div className="container">
             <Unacademic viewModel={ viewModel } appState={ appState }/>
+            { appState.levels.current !== "introduction" && <TourSelector appState={ appState } /> }
           </div>
         </div>
-      )
+      );
     }
     return null;
   }
-};
+}
 
 export default UnacademicContainer;
 

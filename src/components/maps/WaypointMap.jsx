@@ -1,38 +1,38 @@
-import React from 'react';
-import R from 'ramda';
-import Stop from './Stop.jsx';
+import React from "react";
+import R from "ramda";
+import Stop from "./Stop.jsx";
 
 class WaypointMap extends React.Component {
   constructor(){
     this.state = {
       height: 245,
       width: 418,
-      padding: 30,
+      padding: 55,
       radius: 20
-    }
-  }
+    };
+  };
 
   render() {
-    let { height, width, radius, padding } = this.state;
+
+    let { height, width, radius } = this.state;
     let { model, handleComplete, handleHover } = this.props;
     let { checkpoints } = model;
     let baseLine = height / 2;
     let center = width / 2;
-    let interval = ((width - padding * 3) / (checkpoints.length - 1));
+
+    let interval = width / (checkpoints.length + 1);
 
     let drawStops = R.mapIndexed((checkpoint, index) => {
-      let x = (padding * 1.5) + (index * interval);
+      let x = interval + (index * interval);
       let y = baseLine;
-      let textY = baseLine - padding;
-      let maxHeight = (textY - padding);
-      let maxResources = 2;
-      let baseHeight = maxHeight / maxResources;
-      let params = { x, y, radius, center, baseHeight, textY, checkpoint }
+      let highlightPoints = false;
+      let params = { x, y, radius, center, checkpoint, highlightPoints };
 
-      return <Stop
-        handleHover={ handleHover.bind(this) }
-        handleComplete={ handleComplete.bind(this) }
-        key={ index } params={ params }/>
+      return (
+        <Stop handleHover={ handleHover.bind(this) }
+          handleComplete={ handleComplete.bind(this) }
+          key={ index } params={ params }/>
+      );
     });
 
     return (
@@ -44,12 +44,12 @@ class WaypointMap extends React.Component {
           y2={ baseLine }/>
         { drawStops(checkpoints) }
       </svg>
-    )
-  }
-};
+    );
+  };
+}
 
 WaypointMap.propTypes = {
   model: React.PropTypes.object
-}
+};
 
 export default WaypointMap;
